@@ -33,7 +33,7 @@ export default function InterviewSession() {
           setIsRecording(false);
           setIsProcessing(true);
         }
-      }, 1500);
+      }, 3000);
     } else {
       if (silenceTimeoutRef.current) {
         clearTimeout(silenceTimeoutRef.current);

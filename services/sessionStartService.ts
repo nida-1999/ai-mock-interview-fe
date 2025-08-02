@@ -1,22 +1,8 @@
 import axios from "axios";
 
-export interface QuestionData {
-  questionId: number;
-  questionTitle: string;
-  questionDescription: string;
-  constraints: string[];
-  example: {
-    input: string;
-    output: string;
-  };
-  hints: string[];
-  tags: string[];
-  difficulty: string;
-}
-
-export async function fetchQuestion(sessionId: string) {
+export async function startSession() {
   try {
-    const response = await axios.get(`/api/main?path=question/${sessionId}`);
+    const response = await axios.get(`/api/main?path=start-new-session-1`);
     console.log(response, "response");
     return response.data;
   } catch (error: any) {

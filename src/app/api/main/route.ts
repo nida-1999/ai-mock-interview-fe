@@ -13,6 +13,8 @@ export async function GET(req: Request) {
   try {
     const apiUrl = process.env.URL; // Make sure this is defined in .env.local
 
+    console.log("`${apiUrl}/${path}`", `${apiUrl}/${path}`);
+
     const response = await fetch(`${apiUrl}/${path}`, {
       method: "GET",
       headers: {
