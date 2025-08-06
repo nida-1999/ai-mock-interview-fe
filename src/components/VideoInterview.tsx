@@ -20,7 +20,7 @@ export default function InterviewSession({ sessionId, introMsg }: any) {
 
   useEffect(() => {
     const socket = new WebSocket(
-      `wss://7a189fa91eb7.ngrok-free.app/ws/${sessionId}`
+      `wss://8b4ebdd2acf9.ngrok-free.app/ws/${sessionId}`
     );
     socketRef.current = socket;
 
@@ -34,31 +34,13 @@ export default function InterviewSession({ sessionId, introMsg }: any) {
         sessionId &&
         introMsg
       ) {
-        console.log("---in if-------");
-        socketRef.current.send(
-          JSON.stringify({
-            type: "user-message",
-            content: introMsg,
-          })
-        );
+      
         setMessages([introMsg]);
         speak(introMsg);
       }
     };
 
-    // socket.onmessage = (event) => {
-    //   try {
-    //     console.log(event?.data);
-    //     const data = event.data;
-    //     if (data) {
-    //       setMessages((prev) => [...prev, data]);
-    //       speak(data);
-    //     }
-    //   } catch (err) {
-    //     console.error("❌ Invalid JSON from server", err);
-    //     setError("Invalid message format");
-    //   }
-    // };
+
 
     socket.onmessage = (event) => {
       try {
@@ -170,11 +152,11 @@ export default function InterviewSession({ sessionId, introMsg }: any) {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
       socketRef.current.send(
         JSON.stringify({
-          // type: "user-message",
+          type: "user-message",
           content: message,
         })
       );
-      socketRef.current.send(message);
+      // socketRef.current.send(message);
     } else {
       setError("WebSocket not connected.");
     }
@@ -212,21 +194,9 @@ export default function InterviewSession({ sessionId, introMsg }: any) {
   };
 
   const startInterview = async () => {
-    setIsInterviewStarted(true);
-    // const intro = "Let's begin your interview. Tell me about yourself.";
-    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      socketRef.current.send(introMsg);
-
-      // socketRef.current.send(
-      //   JSON.stringify({
-      //     type: "user-message",
-      //     content: introMsg,
-      //     sessionId: "123",
-      //   })
-      // );
-    }
-    // setMessages([introMsg]);
-    // await speak(introMsg);
+  setIsInterviewStarted(true);
+  
+    setMessages([introMsg]);
     setAwaitingUserSpeech(true);
   };
 
@@ -286,30 +256,4 @@ export default function InterviewSession({ sessionId, introMsg }: any) {
     </div>
   );
 }
-// socket.onmessage = (event) => {
-//   try {
-//     const data = JSON.parse(event.data);
-//     console.log("type", data?.type);
-//     console.log("msg", data?.message);
-//     if (data.type === "ai-response" && data?.message) {
-//       setMessages((prev) => [...prev, data?.message]);
-//       speak(data?.message);
-//     }
-//   } catch (err) {
-//     console.error("❌ Invalid JSON from server", err);
-//     setError("Invalid message format");
-//   }
-// };
 
-// return () => {
-//   socket.close();
-//   socketRef.current = null;
-// };
-
-// socketRef.current.send(
-//   JSON.stringify({
-//     type: "user-message",
-//     message,
-//     sessionId: "123",
-//   })
-// );
