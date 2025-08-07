@@ -20,8 +20,9 @@ export default function InterviewSession({ sessionId, introMsg }: any) {
 
   useEffect(() => {
     const socket = new WebSocket(
-      `wss://8b4ebdd2acf9.ngrok-free.app/ws/${sessionId}`
+      `wss://d6e5c301f09d.ngrok-free.app/ws/${sessionId}`
     );
+
     socketRef.current = socket;
 
     socket.onopen = () => {
@@ -34,13 +35,9 @@ export default function InterviewSession({ sessionId, introMsg }: any) {
         sessionId &&
         introMsg
       ) {
-      
-        setMessages([introMsg]);
-        speak(introMsg);
+       console.log("web socket is open")
       }
     };
-
-
 
     socket.onmessage = (event) => {
       try {
@@ -180,7 +177,7 @@ export default function InterviewSession({ sessionId, introMsg }: any) {
       const audioUrl = URL.createObjectURL(blob);
 
       if (audioRef.current) {
-        audioRef.current.src = audioUrl;
+        audioRef.current.src = audioUrl;    
         audioRef.current.play().catch(() => setError("Audio playback error."));
         audioRef.current.onended = () => {
           setIsProcessing(false);
@@ -194,9 +191,9 @@ export default function InterviewSession({ sessionId, introMsg }: any) {
   };
 
   const startInterview = async () => {
-  setIsInterviewStarted(true);
-  
+   setIsInterviewStarted(true);
     setMessages([introMsg]);
+    speak(introMsg)
     setAwaitingUserSpeech(true);
   };
 

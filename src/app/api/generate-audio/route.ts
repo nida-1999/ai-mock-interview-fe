@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 
-console.log("hi");
-
 export async function POST(request: Request) {
   const { text } = await request.json();
 
